@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+   <bean class="test.IPhone" id="apple">
+   		<property name="watch" ref="aw" />
+   		<property name="num" ref="1234" />   		
+   	</bean>
+   <bean class="test.GalaxyPhone" id="samsung">
+   <!-- 생성자 주입 -->
+   		<constructor-arg ref="gw"/>
+   		<constructor-arg value="5678"/>
+   </bean>
+   
+   <bean class="test.AppleWatch" id="aw"  />   
+   <bean class="test.GalaxyWatch" id="gw" />
+      
+</beans>
