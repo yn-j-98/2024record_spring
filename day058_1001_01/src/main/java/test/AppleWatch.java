@@ -1,5 +1,8 @@
 package test;
 
+import org.springframework.stereotype.Component;
+
+@Component("aw")
 public class AppleWatch implements Watch {
 	
 	public AppleWatch() {

@@ -1,5 +1,8 @@
 package test;
 
+import org.springframework.stereotype.Component;
+
+@Component("gw")
 public class GalaxyWatch implements Watch {
 
 	public GalaxyWatch() {
@@ -10,10 +13,9 @@ public class GalaxyWatch implements Watch {
 	public void powerOn() {
 		System.out.println("갤럭시워치 ON");
 	}
-
 	@Override
 	public void powerOff() {
-		System.out.println("갤럭시워치 OFF");		
+		System.out.println("갤럭시워치 OFF");	
 	}
 
 }
