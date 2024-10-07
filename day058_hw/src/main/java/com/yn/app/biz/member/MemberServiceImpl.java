@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("member")
+
+// 인터페이스인 MemberService의 구현체(실현체)
+@Service("memberService")
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
