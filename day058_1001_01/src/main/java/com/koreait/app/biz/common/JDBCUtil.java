@@ -7,11 +7,7 @@ import java.sql.SQLException;
 
 public class JDBCUtil {
 	private static final String driverName="com.mysql.cj.jdbc.Driver";
-<<<<<<< HEAD
 	private static final String url="jdbc:mysql://localhost:3306/kim";
-=======
-	private static final String url="jdbc:mysql://localhost:3306/yena";
->>>>>>> branch 'main' of https://github.com/yn-j-98/2024record_spring.git
 	private static final String userName="root";
 	private static final String password="1234";
 	

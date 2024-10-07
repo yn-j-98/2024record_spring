@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component("samsung")
 public class GalaxyPhone implements Phone {
-	@Autowired // DI == 의존주입
+	@Autowired // DI == 의존 주입
 	@Qualifier("gw")
 	private Watch watch;
 	

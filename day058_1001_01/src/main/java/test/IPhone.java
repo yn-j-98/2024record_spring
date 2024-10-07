@@ -13,6 +13,17 @@ public class IPhone implements Phone {
 	public IPhone() {
 		System.out.println("아이폰 객체 생성 01");
 	}
+	/*
+	public IPhone(Watch watch) {
+		this.watch=watch;
+		System.out.println("아이폰 객체 생성 02");
+	}
+	public IPhone(Watch watch,int num) {
+		this.watch=watch;
+		this.num=num;
+		System.out.println("아이폰 객체 생성 03");
+	}
+	*/
 
 	@Override
 	public void powerOn() {
