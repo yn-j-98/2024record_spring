@@ -1,38 +1,38 @@
 package com.yn.app.biz.member;
 
-import org.springframework.stereotype.Component;
-
-@Component("memberDTO")
 public class MemberDTO {
-	private int member_num;
-	private String member_id;
-	private String member_password;
-
+	private String mid;
+	private String password;
+	private String name;
+	private String role;
 	
-	public int getMember_num() {
-		return member_num;
+	public String getMid() {
+		return mid;
 	}
-	public void setMember_num(int member_num) {
-		this.member_num = member_num;
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
-	public String getMember_id() {
-		return member_id;
+	public String getPassword() {
+		return password;
 	}
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getMember_password() {
-		return member_password;
+	public String getName() {
+		return name;
 	}
-	public void setMember_password(String member_password) {
-		this.member_password = member_password;
+	public void setName(String name) {
+		this.name = name;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	@Override
 	public String toString() {
-		return "MemberDTO [member_num=" + member_num + ", member_id=" + member_id + ", member_password="
-				+ member_password + "]";
+		return "MemberDTO [mid=" + mid + ", password=" + password + ", name=" + name + ", role=" + role + "]";
 	}
-
-	
-
 }

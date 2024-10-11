@@ -1,39 +1,40 @@
 package com.yn.app.view.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.yn.app.biz.board.BoardDAO;
 import com.yn.app.biz.board.BoardDTO;
+import com.yn.app.biz.board.BoardService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-public class BoardController implements Controller{
+@Controller
+public class BoardController {
 	@Autowired
-	private BoardDAO boardDAO;
-
-	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// 1. 사용자(클라이언트, 브라우저)가 보낸 파라미터에서 값 추출
-		BoardDTO data = new BoardDTO();
-		String board_title = request.getParameter("title");
-		String board_content = request.getParameter("content");
-		// 2. DB 연동
-		data.setBoard_title(board_title);
-		data.setBoard_content(board_content);
-		
-		// 3. 페이지 이동 == 네비게이션
-		ModelAndView mav = new ModelAndView();
-		if(!boardDAO.insert(data)) {
-			mav.setViewName("error.jsp");
-			// insert 실패했다면
-		}
-		else {			
-			mav.setViewName("main.do"); // 작성 후 이동할 페이지
-		}
-		return mav;
+	private BoardService boardService;
+	
+	@RequestMapping(value="/main.do")
+	public String main(BoardDTO boardDTO, Model model) {
+		//model == 데이터 전달하는 역할
+		System.out.println(boardDTO);
+		List<BoardDTO> datas=boardService.selectAll(boardDTO);
+		model.addAttribute("datas", datas);
+		return "main";
 	}
-
+	
+	@RequestMapping(value="/insertBoard.do", method=RequestMethod.GET)
+	public String insertBoard() {
+		return "insertBoard";
+	}
+	@RequestMapping(value="/insertBoard.do", method=RequestMethod.POST)
+	public String insertBoard(BoardDTO boardDTO) {
+		boolean flag=boardService.insert(boardDTO);
+		System.out.println("insertBoard ["+flag+"]");
+		return "redirect:main.do";
+	}
+	
+	
 }

@@ -7,152 +7,76 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.yn.app.biz.common.JDBCUtil;
 
 @Repository
-public class BoardDAO implements BoardService {
-
-    private final String SEARCH_ALL = "SELECT BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER FROM BOARD"; // 전체 게시글 조회
-    private final String SEARCH_ONE = "SELECT BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER FROM BOARD WHERE BOARD_NUM = ?"; // 특정 게시글 조회
-    private final String INSERT = "INSERT INTO BOARD (BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER) VALUES (?, ?, ?, ?)"; // 게시글 추가
-    private final String UPDATE = "UPDATE BOARD SET BOARD_TITLE = ?, BOARD_CONTENT = ?, BOARD_WRITER = ? WHERE BOARD_NUM = ?"; // 게시글 수정
-    private final String DELETE = "DELETE FROM BOARD WHERE BOARD_NUM = ?"; // 게시글 삭제 
-
-    @Autowired
-    private BoardDTO boardDTO;
-
-    @Override
-    public List<BoardDTO> SelectAll(BoardDTO boardDTO) {
-        Connection conn = JDBCUtil.connect();
-        PreparedStatement pstmt = null;
-        List<BoardDTO> datas = new ArrayList<>();
-
-        try {
-            pstmt = conn.prepareStatement(SEARCH_ALL);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                boardDTO = new BoardDTO();
-                boardDTO.setBoard_num(rs.getInt("BOARD_NUM"));
-                boardDTO.setBoard_title(rs.getString("BOARD_TITLE"));
-                boardDTO.setBoard_content(rs.getString("BOARD_CONTENT"));
-                boardDTO.setBoard_writer(rs.getString("BOARD_WRITER"));
-                datas.add(boardDTO);
-            }
-        } catch (SQLException e) {
-            System.err.println("SQL문 실패");
-        } finally {
-            JDBCUtil.disconnect(pstmt, conn);
-        }
-        return datas;
-    }
-
-    @Override
-    public BoardDTO SelectOne(BoardDTO boardDTO) {
-        Connection conn = JDBCUtil.connect();
-        PreparedStatement pstmt = null;
-
-        try {
-            pstmt = conn.prepareStatement(SEARCH_ONE);
-            pstmt.setInt(1, boardDTO.getBoard_num());
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                boardDTO.setBoard_num(rs.getInt("BOARD_NUM"));
-                boardDTO.setBoard_title(rs.getString("BOARD_TITLE"));
-                boardDTO.setBoard_content(rs.getString("BOARD_CONTENT"));
-                boardDTO.setBoard_writer(rs.getString("BOARD_WRITER"));
-            }
-        } catch (SQLException e) {
-            System.err.println("SQL문 실패");
-        } finally {
-            JDBCUtil.disconnect(pstmt, conn);
-        }
-        return this.boardDTO;
-    }
-
-    @Override
-    public boolean insert(BoardDTO boardDTO) {
-        System.out.println("board.BoardDAO.insert 시작");
-        Connection conn = JDBCUtil.connect();
-        PreparedStatement pstmt = null;
-
-        try {
-            pstmt = conn.prepareStatement(INSERT);
-            pstmt.setInt(1, boardDTO.getBoard_num());
-            pstmt.setString(2, boardDTO.getBoard_title());
-            pstmt.setString(3, boardDTO.getBoard_content());
-            pstmt.setString(4, boardDTO.getBoard_writer());
-
-            int rs = pstmt.executeUpdate();
-            if (rs <= 0) {
-                System.err.println("board.BoardDAO.insert 실패");
-                return false;
-            }
-
-        } catch (SQLException e) {
-            System.err.println("board.BoardDAO.insert SQL문 실패");
-            return false;
-        } finally {
-            JDBCUtil.disconnect(pstmt, conn);
-        }
-        System.out.println("board.BoardDAO.insert 성공");
-        return true;
-    }
-
-    @Override
-    public boolean update(BoardDTO boardDTO) {
-        System.out.println("board.BoardDAO.update 시작");
-        Connection conn = JDBCUtil.connect();
-        PreparedStatement pstmt = null;
-
-        try {
-            pstmt = conn.prepareStatement(UPDATE);
-            pstmt.setString(1, boardDTO.getBoard_title());
-            pstmt.setString(2, boardDTO.getBoard_content());
-            pstmt.setString(3, boardDTO.getBoard_writer());
-            pstmt.setInt(4, boardDTO.getBoard_num());
-
-            int rs = pstmt.executeUpdate();
-            if (rs <= 0) {
-                System.err.println("board.BoardDAO.update 실패");
-                return false;
-            }
-
-        } catch (SQLException e) {
-            System.err.println("board.BoardDAO.update SQL문 실패");
-            return false;
-        } finally {
-            JDBCUtil.disconnect(pstmt, conn);
-        }
-        System.out.println("board.BoardDAO.update 성공");
-        return true;
-    }
-
-    @Override
-    public boolean delete(BoardDTO boardDTO) {
-        System.out.println("board.BoardDAO.delete 시작");
-        Connection conn = JDBCUtil.connect();
-        PreparedStatement pstmt = null;
-
-        try {
-            pstmt = conn.prepareStatement(DELETE);
-            pstmt.setInt(1, boardDTO.getBoard_num());
-
-            int rs = pstmt.executeUpdate();
-            if (rs <= 0) {
-                System.err.println("board.BoardDAO.delete 실패");
-                return false;
-            }
-
-        } catch (SQLException e) {
-            System.err.println("board.BoardDAO.delete SQL문 실패");
-            return false;
-        } finally {
-            JDBCUtil.disconnect(pstmt, conn);
-        }
-        System.out.println("board.BoardDAO.delete 성공");
-        return true;
-    }
+public class BoardDAO {
+	private final String SELECTALL = "SELECT BID,CONTENT,WRITER FROM BOARD";
+	private final String SELECTALL_CONTENT = "SELECT BID,CONTENT,WRITER FROM BOARD WHERE CONTENT LIKE CONCAT('%',?,'%')";
+	private final String SELECTALL_WRITER = "SELECT BID,CONTENT,WRITER FROM BOARD WHERE WRITER=?";
+	private final String INSERT = "INSERT INTO BOARD (CONTENT,WRITER) VALUES(?,?)";
+	
+	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
+		List<BoardDTO> datas=new ArrayList<BoardDTO>();
+		
+		Connection conn=JDBCUtil.connect();
+		PreparedStatement pstmt=null;
+		try {
+			if(boardDTO.getCondition() == null) {
+				pstmt = conn.prepareStatement(SELECTALL);
+			}
+			else if(boardDTO.getKeyword().equals("")) { // 공백일 경우
+				return datas;
+			}
+			else if(boardDTO.getCondition().equals("CONTENT")) {
+				pstmt = conn.prepareStatement(SELECTALL_CONTENT);
+				pstmt.setString(1, boardDTO.getKeyword());
+			}
+			else if(boardDTO.getCondition().equals("WRITER")) {
+				pstmt = conn.prepareStatement(SELECTALL_WRITER);
+				pstmt.setString(1, boardDTO.getKeyword());
+			}			
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()) {
+				BoardDTO data=new BoardDTO();
+				data.setBid(rs.getInt("BID"));
+				data.setContent(rs.getString("CONTENT"));
+				data.setWriter(rs.getString("WRITER"));
+				datas.add(data);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		
+		return datas;
+	}
+	public BoardDTO selectOne(BoardDTO boardDTO) {
+		return null;
+	}
+	public boolean insert(BoardDTO boardDTO) {
+		Connection conn=JDBCUtil.connect();
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(INSERT);
+			pstmt.setString(1, boardDTO.getContent());
+			pstmt.setString(2, boardDTO.getWriter());
+			int result=pstmt.executeUpdate();
+			if(result <= 0) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}	
+		
+		return true;
+	}
+	public boolean update(BoardDTO boardDTO) {
+		return false;
+	}
+	public boolean delete(BoardDTO boardDTO) {
+		return false;
+	}
 }

@@ -12,7 +12,9 @@ import com.koreait.app.biz.common.JDBCUtil;
 
 @Repository
 public class MemberDAO {
-	List<MemberDTO> selectAll(MemberDTO memberDTO) {
+	private final String SELECTONE = "SELECT NAME FROM MEMBER WHERE MID=? AND PASSWORD=?";
+	
+	public List<MemberDTO> selectAll(MemberDTO memberDTO) {
 
 		Connection conn=JDBCUtil.connect();
 		PreparedStatement pstmt;
@@ -28,16 +30,33 @@ public class MemberDAO {
 		
 		return null;
 	}
-	MemberDTO selectOne(MemberDTO memberDTO) {
-		return  null;
+	public MemberDTO selectOne(MemberDTO memberDTO) {
+		MemberDTO data=null;
+		
+		Connection conn=JDBCUtil.connect();
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(SELECTONE);
+			pstmt.setString(1, memberDTO.getMid());
+			pstmt.setString(2, memberDTO.getPassword());
+			ResultSet rs=pstmt.executeQuery();
+			if(rs.next()) {
+				data=new MemberDTO();
+				data.setName(rs.getString("NAME"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		
+		return  data;
 	}
-	boolean insert(MemberDTO memberDTO) {
+	public boolean insert(MemberDTO memberDTO) {
 		return false;
 	}
-	boolean update(MemberDTO memberDTO) {
+	public boolean update(MemberDTO memberDTO) {
 		return false;
 	}
-	boolean delete(MemberDTO memberDTO) {
+	public boolean delete(MemberDTO memberDTO) {
 		return false;
 	}
 }

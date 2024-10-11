@@ -7,17 +7,9 @@
 						http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
-	<context:component-scan base-package="com.koreait.app.biz.member" />
-	<context:component-scan base-package="com.koreait.app.view.member" />
-	
-	<!-- 
-	<bean class="test.IPhone" id="apple">
-		<property name="watch" ref="aw" />
-		<property name="num" value="1234" />
-	</bean>
-	<bean class="test.GalaxyPhone" id="samsung">
-		<constructor-arg ref="gw" />
-	</bean>
-	 -->
+	<!--  지정한 패키지 내에서 Spring이 자동으로 @Component, @Service, @Repository 등의 어노테이션이 붙은 클래스를 찾아 Bean으로 등록하는 역할 -->
+	<!-- 수동으로 Bean을 등록하는 작업을 줄일 수 있음 -->
+	<context:component-scan base-package="com.yn.app.biz.board" />
+	<context:component-scan base-package="com.yn.app.biz.member" />
 		 
 </beans>

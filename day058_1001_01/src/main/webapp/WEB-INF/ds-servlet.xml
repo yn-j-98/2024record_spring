@@ -7,17 +7,12 @@
 						http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
-	<context:component-scan base-package="com.koreait.app.biz.member" />
 	<context:component-scan base-package="com.koreait.app.view.member" />
+	<context:component-scan base-package="com.koreait.app.biz.member" />
 	
-	<!-- 
-	<bean class="test.IPhone" id="apple">
-		<property name="watch" ref="aw" />
-		<property name="num" value="1234" />
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
 	</bean>
-	<bean class="test.GalaxyPhone" id="samsung">
-		<constructor-arg ref="gw" />
-	</bean>
-	 -->
-		 
+	
 </beans>
