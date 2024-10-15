@@ -19,7 +19,7 @@ public class BoardController {
 	@RequestMapping(value="/main.do")
 	public String main(BoardDTO boardDTO, Model model) {
 		//model == 데이터 전달하는 역할
-		System.out.println(boardDTO);
+		System.out.println("BoardController main 메서드 도착"+boardDTO);
 		List<BoardDTO> datas=boardService.selectAll(boardDTO);
 		model.addAttribute("datas", datas);
 		return "main";
@@ -31,7 +31,7 @@ public class BoardController {
 	}
 	@RequestMapping(value="/insertBoard.do", method=RequestMethod.POST)
 	public String insertBoard(BoardDTO boardDTO) {
-		boolean flag=boardService.insert(boardDTO);
+		boolean flag=boardService.insert(boardDTO); // weaving 처리 대상
 		System.out.println("insertBoard ["+flag+"]");
 		return "redirect:main.do";
 	}

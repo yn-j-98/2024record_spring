@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-						http://www.springframework.org/schema/beans/spring-beans.xsd
-						http://www.springframework.org/schema/context
-						http://www.springframework.org/schema/context/spring-context-4.2.xsd">
-	
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/aop
+                  http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+                  http://www.springframework.org/schema/context
+                  http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+                  	
 	<!--  지정한 패키지 내에서 Spring이 자동으로 @Component, @Service, @Repository 등의 어노테이션이 붙은 클래스를 찾아 Bean으로 등록하는 역할 -->
 	<!-- 수동으로 Bean을 등록하는 작업을 줄일 수 있음 -->
 	<context:component-scan base-package="com.yn.app.biz.board" />
 	<context:component-scan base-package="com.yn.app.biz.member" />
-		 
+	
+	<!-- <bean class="com.yn.app.biz.common.CheckAdvice" id="ca"/> -->
+ 	<bean class="com.yn.app.biz.common.TestAdvice" id="ta"/> 
+	<aop:config>
+		<aop:pointcut expression="execution(* com.yn.app.biz..*Impl.*(..))" id="aPointcut"/>
+		<!-- <aop:pointcut expression="execution(* com.yn.app.biz..*Impl.select*(..))" id="bPointcut"/> -->
+		<aop:pointcut expression="execution(* com.yn.app.biz..BoardServiceImpl.insert(..))" id="cPointcut"/>
+		<!-- <aop:aspect ref="ca">
+			<aop:after-returning pointcut-ref="bPointcut" method="check" returning="returnObj"/>
+		</aop:aspect> -->
+		<aop:aspect ref="ta">
+			<aop:after-returning pointcut-ref="cPointcut" method="print"/>
+		</aop:aspect>
+	</aop:config>	 
 </beans>

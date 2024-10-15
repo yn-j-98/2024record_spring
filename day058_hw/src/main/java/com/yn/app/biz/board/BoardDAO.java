@@ -23,6 +23,7 @@ public class BoardDAO {
 		
 		Connection conn=JDBCUtil.connect();
 		PreparedStatement pstmt=null;
+		int rsCnt = 1; // 로그용
 		try {
 			if(boardDTO.getCondition() == null) {
 				pstmt = conn.prepareStatement(SELECTALL);
@@ -33,18 +34,23 @@ public class BoardDAO {
 			else if(boardDTO.getCondition().equals("CONTENT")) {
 				pstmt = conn.prepareStatement(SELECTALL_CONTENT);
 				pstmt.setString(1, boardDTO.getKeyword());
+			    System.out.println("SELECTALL_CONTENT pstmt 준비 완료");
 			}
 			else if(boardDTO.getCondition().equals("WRITER")) {
 				pstmt = conn.prepareStatement(SELECTALL_WRITER);
 				pstmt.setString(1, boardDTO.getKeyword());
+			    System.out.println("SELECTALL_WRITER pstmt 준비 완료");
+
 			}			
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {
+				System.out.println("SELECTALL RS "+rsCnt);
 				BoardDTO data=new BoardDTO();
 				data.setBid(rs.getInt("BID"));
 				data.setContent(rs.getString("CONTENT"));
 				data.setWriter(rs.getString("WRITER"));
 				datas.add(data);
+				rsCnt++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

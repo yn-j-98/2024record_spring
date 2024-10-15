@@ -12,6 +12,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
+		if(boardDTO.getCondition() != null) {
+			boardDTO.setKeyword(boardDTO.getKeyword().trim());
+		}
 		return boardDAO.selectAll(boardDTO);
 	}
 

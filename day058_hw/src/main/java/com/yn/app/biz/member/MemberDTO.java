@@ -5,6 +5,7 @@ public class MemberDTO {
 	private String password;
 	private String name;
 	private String role;
+	private String condition;
 	
 	public String getMid() {
 		return mid;
@@ -30,9 +31,18 @@ public class MemberDTO {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
 	@Override
 	public String toString() {
-		return "MemberDTO [mid=" + mid + ", password=" + password + ", name=" + name + ", role=" + role + "]";
+		return "MemberDTO [mid=" + mid + ", password=" + password + ", name=" + name + ", role=" + role + ", condition="
+				+ condition + "]";
 	}
+	
+	
+	
 }
