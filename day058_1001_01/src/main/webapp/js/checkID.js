@@ -1,6 +1,6 @@
 
 // 데이터 1개 받기
-/*$(document).ready(function(){
+$(document).ready(function(){
 	$('#mid').on('change', function(){
 		var mid = $(this).val();
 		console.log('['+mid+']');
@@ -27,11 +27,11 @@
 			$('#result').text('');
 		}
 	});
-});*/
+});
 
 // 데이터 여러개 받기
-$(document).ready(function(){
-	$('#mid').on('change', function(){
+/*$(document).ready(function(){
+	$('#mid').on('change',function(){
 		var mid = $(this).val();
 		console.log('['+mid+']');
 		
@@ -39,9 +39,9 @@ $(document).ready(function(){
 			$.ajax({
 				url : 'check.do',
 				type : 'POST',
-				contentType : 'application/json', // 요청 data 형식도 json
-				data : JSON.stringify({ mid : mid }), // 실제로 data도 json으로 보내야 함
-				dataType : json, // 타입또한
+				contentType : 'application/json',
+				data : JSON.stringify({ mid : mid }),
+				dataType : 'json',
 				success : function(data){
 					console.log('['+data+']');
 					console.log(typeof data);
@@ -50,7 +50,7 @@ $(document).ready(function(){
 						$('#result').text('DB에 존재하는 아이디입니다.').css('color','red');
 					}
 					else{
-						$('#result').text('DB에 없는 아이디입니다.').css('color','blue');
+						$('#result').text('DB에 없는 아이디입니다.').css('color','green');
 					}
 				}
 			});
@@ -59,4 +59,4 @@ $(document).ready(function(){
 			$('#result').text('');
 		}
 	});
-});
+});*/

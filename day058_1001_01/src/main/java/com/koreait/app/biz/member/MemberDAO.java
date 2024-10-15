@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.koreait.app.biz.common.JDBCUtil;
 
 @Repository
-public class MemberDAO {
-	private final String SELECTONE = "SELECT MID FROM MEMBER WHERE MID=? AND PASSWORD=?";
+public class MemberDAO {	
+	private final String SELECTONE = "SELECT MID FROM MEMBER WHERE MID=?"; ///// AND PASSWORD=?
 	
 	public List<MemberDTO> selectAll(MemberDTO memberDTO) {
 		return null;
@@ -25,7 +25,7 @@ public class MemberDAO {
 		try {
 			pstmt = conn.prepareStatement(SELECTONE);
 			pstmt.setString(1, memberDTO.getMid());
-			pstmt.setString(2, memberDTO.getPassword());
+			///// pstmt.setString(2, memberDTO.getPassword());
 			ResultSet rs=pstmt.executeQuery();
 			if(rs.next()) {
 				data=new MemberDTO();

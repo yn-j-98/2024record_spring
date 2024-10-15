@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.koreait.app.biz.member.MemberDAO;
 import com.koreait.app.biz.member.MemberDTO;
 import com.koreait.app.biz.member.MemberService;
 
@@ -15,14 +14,13 @@ import jakarta.servlet.http.HttpSession;
 public class LoginController {
 	@Autowired
 	private MemberService memberService;
-	
+		
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public String login() {
 		return "login";
 	}
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	public String login(HttpSession session, MemberDAO memberDAO, MemberDTO memberDTO) {
-																// 커맨드 객체
+	public String login(HttpSession session, MemberDTO memberDTO) { // 커맨드 객체
 		memberDTO = memberService.selectOne(memberDTO);
 		
 		String viewName="redirect:login.do";

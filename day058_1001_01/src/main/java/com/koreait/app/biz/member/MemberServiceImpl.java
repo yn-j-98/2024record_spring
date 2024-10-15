@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
-	
+		
 	@Override
 	public List<MemberDTO> selectAll(MemberDTO memberDTO) {
 		return this.memberDAO.selectAll(memberDTO);
