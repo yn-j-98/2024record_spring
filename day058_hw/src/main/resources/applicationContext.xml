@@ -14,18 +14,8 @@
 	<!-- 수동으로 Bean을 등록하는 작업을 줄일 수 있음 -->
 	<context:component-scan base-package="com.yn.app.biz.board" />
 	<context:component-scan base-package="com.yn.app.biz.member" />
+	<context:component-scan base-package="com.yn.app.biz.common" />
 	
-	<!-- <bean class="com.yn.app.biz.common.CheckAdvice" id="ca"/> -->
- 	<bean class="com.yn.app.biz.common.TestAdvice" id="ta"/> 
-	<aop:config>
-		<aop:pointcut expression="execution(* com.yn.app.biz..*Impl.*(..))" id="aPointcut"/>
-		<!-- <aop:pointcut expression="execution(* com.yn.app.biz..*Impl.select*(..))" id="bPointcut"/> -->
-		<aop:pointcut expression="execution(* com.yn.app.biz..BoardServiceImpl.insert(..))" id="cPointcut"/>
-		<!-- <aop:aspect ref="ca">
-			<aop:after-returning pointcut-ref="bPointcut" method="check" returning="returnObj"/>
-		</aop:aspect> -->
-		<aop:aspect ref="ta">
-			<aop:after-returning pointcut-ref="cPointcut" method="print"/>
-		</aop:aspect>
-	</aop:config>	 
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
 </beans>

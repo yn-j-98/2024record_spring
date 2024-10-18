@@ -18,8 +18,8 @@ $(document).ready(function() {
 				data.forEach(datas => {
 					var html = '<li>' +
 					      '<strong>글 번호:</strong> ' + datas.bid + '<br>' +
-					      '<strong>내용:</strong> ' + (condition === 'CONTENT' ? datas.content : datas.title) + '<br>' +
-					      '<strong>작성자:</strong> ' + (condition === 'NAME' ? datas.name : datas.name) + '<br>' +
+					      '<strong>내용:</strong> ' + (condition === 'CONTENT' ? datas.content : datas.content) + '<br>' +
+					      '<strong>작성자:</strong> ' + (condition === 'WRITER' ? datas.writer : datas.writer) + '<br>' +
 					      '</li>';
 				searchResults.append(html);
 				});	

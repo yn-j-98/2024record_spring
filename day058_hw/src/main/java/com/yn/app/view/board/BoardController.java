@@ -22,6 +22,7 @@ public class BoardController {
 		System.out.println("BoardController main 메서드 도착"+boardDTO);
 		List<BoardDTO> datas=boardService.selectAll(boardDTO);
 		model.addAttribute("datas", datas);
+		System.out.println("datas ["+datas+"]");
 		return "main";
 	}
 	

@@ -13,7 +13,7 @@ import com.yn.app.biz.common.JDBCUtil;
 @Repository
 public class MemberDAO {
 	private final String SELECTONE_IDCHECK = "SELECT MID FROM MEMBER WHERE MID=? ";
-	private final String SELECTONE_LOGIN = "SELECT MID, PASSWORD FROM MEMBER WHERE MID=? AND PASSWORD=?";
+	private final String SELECTONE_LOGIN = "SELECT MID, PASSWORD, ROLE FROM MEMBER WHERE MID=? AND PASSWORD=?";
 	private final String INSERT = "INSERT INTO MEMBER(NAME,MID, PASSWORD) VALUES (?,?,?)";
 	
 	public List<MemberDTO> selectAll(MemberDTO memberDTO) {
@@ -49,6 +49,7 @@ public class MemberDAO {
 			    	data=new MemberDTO();
 			    	data.setMid(rs.getString("MID"));
 			    	data.setPassword(rs.getString("PASSWORD"));
+			    	data.setRole(rs.getString("ROLE"));
 			    }
 
 			}

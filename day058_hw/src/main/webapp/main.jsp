@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
     </div>
     <hr>
     <h3>글 목록</h3>
-    <form id="searchForm">
+    <form>
         <select name="condition" id="condition">
             <option value="CONTENT" ${param.condition eq 'CONTENT' ? 'selected' : ''}>내용</option>
             <option value="WRITER" ${param.condition eq 'WRITER' ? 'selected' : ''}>작성자</option>

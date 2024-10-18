@@ -1,6 +1,7 @@
 package com.yn.app.view.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +16,7 @@ public class CheckController {
 	@Autowired
 	private MemberService memberService;
 	
-	// 데이터 1개 받기
+	// 데이터 1개 받기	
 	@RequestMapping(value="/checkMID.do", method=RequestMethod.POST)
 	public @ResponseBody String checkMID(MemberDTO memberDTO) {
 		System.out.println("비동기 처리 로그"); // 잘 도착 했는지 로그
