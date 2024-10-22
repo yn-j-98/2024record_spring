@@ -22,7 +22,7 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private ImageService imageService;
-	private final String PATH="C:\\YN\\workspace03\\day058_hw\\src\\main\\webapp\\images\\";
+	private final String PATH="C:\\Users\\yenaj\\git\\2024record_spring\\day058_hw\\src\\main\\webapp\\img\\";
 	
 	@RequestMapping(value="/main.do")
 	public String main(BoardDTO boardDTO, Model model) {

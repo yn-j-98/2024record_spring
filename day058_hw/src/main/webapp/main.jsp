@@ -34,9 +34,11 @@
 	    				<c:if test="${not empty datas}">
 	        				<c:forEach var="data" items="${datas}">
 	           					 <li>
-					                <strong>글 번호:</strong> ${data.bid} <br>
-					               <a href="/board.do"> <strong>내용:</strong> ${data.content}</a> <br>
-					                <strong>작성자:</strong> ${data.writer}
+					                <a href="board.do?bid=${data.bid}">
+						                <strong>글 번호:</strong> ${data.bid} <br>
+						                <strong>내용:</strong> ${data.content} <br>
+						                <strong>작성자:</strong> ${data.writer}
+					                </a>
 	        				    </li>
 					        </c:forEach>
 					    </c:if> 

@@ -16,6 +16,7 @@ public class BoardDAO2 {
 	private final String SELECTALL = "SELECT BID,CONTENT,WRITER FROM BOARD";
 	private final String SELECTALL_CONTENT = "SELECT BID,CONTENT,WRITER FROM BOARD WHERE CONTENT LIKE CONCAT('%',?,'%')";
 	private final String SELECTALL_WRITER = "SELECT BID,CONTENT,WRITER FROM BOARD WHERE WRITER=?";
+	private final String SELECTONE = "SELECT BID,CONTENT,WRITER FROM BOARD WHERE BID=? ";
 	private final String INSERT = "INSERT INTO BOARD (BID,CONTENT,WRITER) VALUES(?,?,?)";
 
 	@Autowired
@@ -33,9 +34,8 @@ public class BoardDAO2 {
 		return jdbcTemplate.query(SELECTALL, new BoardRowMapper());
 	}
 	public BoardDTO selectOne(BoardDTO boardDTO) {
-//		Object[] args= {boardDTO.getBid(), boardDTO.getCondition()};
-//		return jdbcTemplate.queryForObject(SELECTALL,args,new BoardRowMapper());
-		return null;
+		Object[] args= {boardDTO.getBid()};
+		return jdbcTemplate.queryForObject(SELECTONE,args,new BoardRowMapper());
 	}
 	public boolean insert(BoardDTO boardDTO) {
 		boardDTO.setBid(20);
