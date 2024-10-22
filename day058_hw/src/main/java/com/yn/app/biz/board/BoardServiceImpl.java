@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDAO2 boardDAO;
 
 	@Override
 	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
@@ -25,7 +25,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean insert(BoardDTO boardDTO) {
-		return boardDAO.insert(boardDTO);
+		//boardDAO.insert(boardDTO); // 트랜잭션 처리 확인용 코드
+		return boardDAO.insert(boardDTO); // 하나의 서비스가 제대로 처리되지않아서, 서비스의 처음 상태로 되돌아감 == ROLLBACK
 	}
 
 	@Override

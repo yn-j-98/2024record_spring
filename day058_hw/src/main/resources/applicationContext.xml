@@ -3,19 +3,45 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xmlns:context="http://www.springframework.org/schema/context"
    xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:tx="http://www.springframework.org/schema/tx"
    xsi:schemaLocation="http://www.springframework.org/schema/beans
                   http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/context
+                  http://www.springframework.org/schema/context/spring-context-4.2.xsd
                   http://www.springframework.org/schema/aop
                   http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
-                  http://www.springframework.org/schema/context
-                  http://www.springframework.org/schema/context/spring-context-4.2.xsd">
-                  	
-	<!--  지정한 패키지 내에서 Spring이 자동으로 @Component, @Service, @Repository 등의 어노테이션이 붙은 클래스를 찾아 Bean으로 등록하는 역할 -->
-	<!-- 수동으로 Bean을 등록하는 작업을 줄일 수 있음 -->
-	<context:component-scan base-package="com.yn.app.biz.board" />
-	<context:component-scan base-package="com.yn.app.biz.member" />
-	<context:component-scan base-package="com.yn.app.biz.common" />
-	
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	
+                  http://www.springframework.org/schema/tx
+                  http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+   
+   <context:component-scan base-package="com.yn.app.biz.board" />
+   <context:component-scan base-package="com.yn.app.biz.member" />
+   <context:component-scan base-package="com.yn.app.biz.common" />
+   <context:component-scan base-package="com.yn.app.biz.image" />
+   
+   
+   <aop:aspectj-autoproxy/>
+   
+   <bean class="org.apache.commons.dbcp.BasicDataSource" id="ds" destroy-method="close">
+      <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+      <property name="url" value="jdbc:mysql://localhost:3306/yena" />
+      <property name="username" value="root" />
+      <property name="password" value="1234" />
+   </bean>
+   <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+      <property name="dataSource" ref="ds" />
+   </bean>
+   
+   <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="txManager">
+      <property name="dataSource" ref="ds" />
+   </bean>
+   <tx:advice transaction-manager="txManager" id="txAdvice">
+		<tx:attributes>
+			<tx:method name="select*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.yn.app.biz..*Impl.*(..))" id="txPointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
 </beans>

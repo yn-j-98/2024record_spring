@@ -7,11 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.yn.app.biz.common.JDBCUtil;
 
-@Repository
+//@Repository
 public class BoardDAO {
 	private final String SELECTALL = "SELECT BID,CONTENT,WRITER FROM BOARD";
 	private final String SELECTALL_CONTENT = "SELECT BID,CONTENT,WRITER FROM BOARD WHERE CONTENT LIKE CONCAT('%',?,'%')";
@@ -27,19 +25,24 @@ public class BoardDAO {
 		try {
 			if(boardDTO.getCondition() == null) {
 				pstmt = conn.prepareStatement(SELECTALL);
+				System.out.println("BoardDAO 전체검색 쿼리실행");
 			}
 			else if(boardDTO.getKeyword().equals("")) { // 공백일 경우
+				System.out.println("키워드 공백 로그");
 				return datas;
 			}
 			else if(boardDTO.getCondition().equals("CONTENT")) {
 				pstmt = conn.prepareStatement(SELECTALL_CONTENT);
 				pstmt.setString(1, boardDTO.getKeyword());
 			    System.out.println("SELECTALL_CONTENT pstmt 준비 완료");
+		        System.out.println("CONTENT 조건으로 쿼리 실행: " + pstmt.toString()); // 쿼리 로그
 			}
 			else if(boardDTO.getCondition().equals("WRITER")) {
 				pstmt = conn.prepareStatement(SELECTALL_WRITER);
 				pstmt.setString(1, boardDTO.getKeyword());
 			    System.out.println("SELECTALL_WRITER pstmt 준비 완료");
+		        System.out.println("WRITER 조건으로 쿼리 실행: " + pstmt.toString()); // 쿼리 로그
+
 
 			}			
 			ResultSet rs=pstmt.executeQuery();
